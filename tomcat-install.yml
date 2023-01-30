@@ -1,0 +1,66 @@
+---
+- name: tomcat playbook
+  hosts: webservers
+  become: true
+  user: ansible
+  connection: ssh
+
+  tasks:
+    - name: install java on redhat host machines
+      yum:
+        name: java
+        state: installed
+      when: ansible_os_family == "RedHat"
+
+    - name: install java on debian host machines
+      apt:
+        name: default-jdk
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: download tomcat package on all hosts
+      get_url:
+        url: https://dlcdn.apache.org/tomcat/tomcat-8/v8.5.85/bin/apache-tomcat-8.5.85.tar.gz
+        dest: /opt
+
+    - name: extract the tar file
+      unarchive:
+        src: /opt/apache-tomcat-8.5.85.tar.gz
+        dest: /opt
+        remote_src: yes
+
+    - name: provide file permissions
+      file:
+        path: /opt/apache-tomcat-8.5.85/bin/startup.sh
+        mode: 0777
+
+    - name: execute the shell
+      shell: nohup ./startup.sh
+      args:
+        chdir: /opt/apache-tomcat-8.5.85/bin
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

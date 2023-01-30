@@ -1,0 +1,12 @@
+---
+- name: test playbook
+  hosts: webservers
+  user: ansible
+  become: true
+  connection: ssh
+
+  tasks:
+    - name: copying files to host machines
+      copy:
+        src: /home/ansible/indexfile
+        dest: /home/ansible

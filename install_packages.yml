@@ -1,0 +1,58 @@
+---
+- name: Packages playbook
+  hosts: webservers
+  user: ansible
+  become: true
+  connection: ssh
+
+  tasks:
+    - name: install tree package on redhat machines
+      yum:
+        name: tree
+        state: installed
+      when: ansible_os_family == "RedHat"
+
+    - name: install tree package on debian machines
+      apt:
+        name: tree
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: installing web server on redhat machines
+      yum:
+        name: httpd
+        state: installed
+      when: ansible_os_family == "RedHat"
+
+    - name: installing web server on ubuntu machines
+      apt:
+        name: apache2
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: starting httpd service
+      service:
+        name: httpd
+        state: started
+      when: ansible_os_family == "RedHat"
+
+    - name: starting apache service
+      service:
+        name: apache2
+        state: started
+      when: ansible_os_family == "Debian"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

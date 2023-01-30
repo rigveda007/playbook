@@ -1,0 +1,5 @@
+- name: installing container on hosts
+  yum:
+    name: docker
+    state: installed
+  when: ansible_os_family == "RedHat"

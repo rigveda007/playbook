@@ -1,0 +1,14 @@
+---
+- name: test playbook
+  hosts: webservers
+  user: ansible
+  become: true
+  connection: ssh
+
+  vars_files:
+    names.yml
+
+  tasks:
+    - name: creating variable user {{user3}}
+      user:
+        name: "{{user3}}"

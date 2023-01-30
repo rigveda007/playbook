@@ -1,0 +1,16 @@
+---
+- name: test playbook
+  hosts: webservers
+  user: ansible
+  become: true
+  connection: ssh
+
+  tasks:
+    - name: creating another set of users
+      user:
+        name: "{{item}}"
+        state: present
+      with_items:
+        - madhav
+        - gopal
+        - krishna

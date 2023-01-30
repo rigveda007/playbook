@@ -1,0 +1,9 @@
+---
+- name: roles playbook
+  hosts: webservers
+  user: ansible
+  become: true
+  connection: ssh
+
+  roles:
+    - testrole
